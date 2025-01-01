@@ -23,7 +23,7 @@ export const detectPixelMovement = (video, onMovementDetected) => {
     }
 
     // Umbral para detectar movimiento
-    if (totalDifference > 3075000) {//2575000
+    if (totalDifference > 4075000) {//2575000
       onMovementDetected();
     }
   }

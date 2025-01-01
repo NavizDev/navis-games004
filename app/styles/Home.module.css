@@ -13,4 +13,23 @@
 
 .quiet {
     background-color: black;
+}
+
+.cameraContainer {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    transition: background-color 0.5s ease;
   }
+  
+  .cameraContainer.quiet {
+    background-color: white;
+  }
+  
+  .cameraContainer.movementDetected {
+    background-color: red;
+  }
+  

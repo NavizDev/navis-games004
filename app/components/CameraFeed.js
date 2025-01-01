@@ -32,7 +32,9 @@ const CameraFeed = ({ onFrame }) => {
     processFrames();
   }, [onFrame]);
 
-  return <video ref={videoRef} style={{ width: '100%', maxWidth: '600px' }} />;
+  return <div>
+    <video ref={videoRef} style={{ width: '100%', height: 'auto', display: 'block' }} />;
+  </div>
 };
 
 export default CameraFeed;
