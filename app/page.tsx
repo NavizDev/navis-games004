@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useRef } from 'react';
 import CameraFeed from './components/CameraFeed';
-import { detectPixelMovement } from './utils/detectPixelMovement';
+import { detectPixelMovement } from './utils/detectPixelMovement2';
 
 const App = () => {
   const [status, setStatus] = useState('Quiet');
@@ -10,20 +10,28 @@ const App = () => {
   const lastMovementTimeRef = useRef(Date.now());
   const consecutiveMovements = useRef(0);
 
+  // const handleFrame = (video : any) => {
+  //   detectPixelMovement(
+  //     video,
+  //     () => {
+  //       consecutiveMovements.current += 1;
+  //       if (consecutiveMovements.current > 2) { // Debe persistir al menos 3 frames
+  //         console.log('Movement detected!');
+  //         setStatus('MOVEMENT DETECTED!');
+  //         lastMovementTimeRef.current = Date.now();
+  //       }
+  //     },
+  //     threshold,
+  //     absoluteThreshold
+  //   );
+  // };
+
   const handleFrame = (video : any) => {
-    detectPixelMovement(
-      video,
-      () => {
-        consecutiveMovements.current += 1;
-        if (consecutiveMovements.current > 2) { // Debe persistir al menos 3 frames
-          console.log('Movement detected!');
-          setStatus('MOVEMENT DETECTED!');
-          lastMovementTimeRef.current = Date.now();
-        }
-      },
-      threshold,
-      absoluteThreshold
-    );
+    detectPixelMovement(video, () => {
+      console.log('Movement detected!');
+      setStatus('MOVEMENT DETECTED!');
+      lastMovementTimeRef.current = Date.now(); // Actualiza el tiempo de detección
+    });
   };
   
     // Verifica periódicamente si debe volver a "Quiet"
@@ -31,9 +39,9 @@ const App = () => {
     const interval = setInterval(() => {
         if (Date.now() - lastMovementTimeRef.current > 1000) {
         setStatus('Quiet');
-        consecutiveMovements.current = 0; // Reinicia el contador de movimiento
+        // consecutiveMovements.current = 0; // Reinicia el contador de movimiento
         }
-    }, 500);
+    }, 1000);
 
     return () => clearInterval(interval);
     }, []);
@@ -43,7 +51,7 @@ const App = () => {
     <div style={{ textAlign: 'center' }}>
       <h1>LUZ VERDE, LUZ ROJA</h1>
       <h2>Status: {status}</h2>
-      <div>
+      {/* <div>
         <label>
           Sensitivity (Normalized Threshold):
           <input
@@ -69,7 +77,7 @@ const App = () => {
           />
         </label>
         <p>Absolute Threshold: {absoluteThreshold}</p>
-        </div>
+        </div> */}
       <CameraFeed onFrame={handleFrame} />
     </div>
   );
