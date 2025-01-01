@@ -9,9 +9,10 @@ const App = () => {
   const [threshold, setThreshold] = useState(0.02); // Sensibilidad normalizada
   const [absoluteThreshold, setAbsoluteThreshold] = useState(100000); // Umbral absoluto
   const lastMovementTimeRef = useRef(Date.now());
+  const [umbral, setUmbral] = useState(8050000)//2575000
 
   const handleFrame = (video : any) => {
-    detectPixelMovement(video, () => {
+    detectPixelMovement(video, umbral, () => {
       console.log('Movement detected!');
       setStatus('MOVEMENT DETECTED!');
       lastMovementTimeRef.current = Date.now(); // Actualiza el tiempo de detección
@@ -37,20 +38,19 @@ const App = () => {
     <div className={`${styles.main} ${containerClass}`}>
       <h1>LUZ VERDE, LUZ ROJA</h1>
       <h2>Status: {status}</h2>
-      {/* <div>
         <label>
           Sensitivity (Normalized Threshold):
           <input
             type="range"
-            min="0.001"
-            max="0.05"
-            step="0.001"
-            value={threshold}
-            onChange={(e) => setThreshold(parseFloat(e.target.value))}
+            min="1000000"
+            max="10000000"
+            step="500000"
+            value={umbral}
+            onChange={(e) => setUmbral(parseFloat(e.target.value))}
           />
         </label>
-        <p>Normalized Threshold: {threshold.toFixed(3)}</p>
-
+        <p>Umbral {umbral}</p>
+      {/* <div>
         <label>
           Absolute Threshold:
           <input

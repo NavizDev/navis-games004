@@ -1,6 +1,6 @@
 let previousFrame = null;
 
-export const detectPixelMovement = (video, onMovementDetected) => {
+export const detectPixelMovement = (video, umbral, onMovementDetected) => {
   const canvas = document.createElement('canvas');
   const context = canvas.getContext('2d');
   canvas.width = video.videoWidth;
@@ -23,7 +23,7 @@ export const detectPixelMovement = (video, onMovementDetected) => {
     }
 
     // Umbral para detectar movimiento
-    if (totalDifference > 4075000) {//2575000
+    if (totalDifference > umbral) {//2575000
       onMovementDetected();
     }
   }
