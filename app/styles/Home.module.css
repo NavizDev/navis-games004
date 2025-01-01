@@ -1,0 +1,16 @@
+.main{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    color: #fff;
+    transition: background-color 0.5s ease;
+}
+
+.movementDetected{
+    background-color: red;
+}
+
+.quiet {
+    background-color: black;
+  }

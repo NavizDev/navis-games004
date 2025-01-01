@@ -2,29 +2,13 @@
 import React, { useState, useRef } from 'react';
 import CameraFeed from './components/CameraFeed';
 import { detectPixelMovement } from './utils/detectPixelMovement2';
+import styles from "./styles/Home.module.css";
 
 const App = () => {
   const [status, setStatus] = useState('Quiet');
   const [threshold, setThreshold] = useState(0.02); // Sensibilidad normalizada
   const [absoluteThreshold, setAbsoluteThreshold] = useState(100000); // Umbral absoluto
   const lastMovementTimeRef = useRef(Date.now());
-  const consecutiveMovements = useRef(0);
-
-  // const handleFrame = (video : any) => {
-  //   detectPixelMovement(
-  //     video,
-  //     () => {
-  //       consecutiveMovements.current += 1;
-  //       if (consecutiveMovements.current > 2) { // Debe persistir al menos 3 frames
-  //         console.log('Movement detected!');
-  //         setStatus('MOVEMENT DETECTED!');
-  //         lastMovementTimeRef.current = Date.now();
-  //       }
-  //     },
-  //     threshold,
-  //     absoluteThreshold
-  //   );
-  // };
 
   const handleFrame = (video : any) => {
     detectPixelMovement(video, () => {
@@ -46,9 +30,11 @@ const App = () => {
     return () => clearInterval(interval);
     }, []);
 
+    const containerClass =
+    status === 'MOVEMENT DETECTED!' ? styles.movementDetected : styles.quiet;
 
   return (
-    <div style={{ textAlign: 'center' }}>
+    <div className={`${styles.main} ${containerClass}`}>
       <h1>LUZ VERDE, LUZ ROJA</h1>
       <h2>Status: {status}</h2>
       {/* <div>
