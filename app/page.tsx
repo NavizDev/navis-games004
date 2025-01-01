@@ -70,7 +70,7 @@ const App = () => {
         </label>
         <p>Absolute Threshold: {absoluteThreshold}</p>
         </div>
-      {/* <CameraFeed onFrame={handleFrame} /> */}
+      <CameraFeed onFrame={handleFrame} />
     </div>
   );
 };
